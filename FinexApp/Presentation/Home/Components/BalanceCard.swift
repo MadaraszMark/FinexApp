@@ -2,10 +2,11 @@ import SwiftUI
 
 struct BalanceCard: View {
 
+    let balanceText: String
+
     var body: some View {
         ZStack {
 
-            // MARK: - Background
             AuthCardBackground()
                 .clipShape(
                     RoundedRectangle(
@@ -14,7 +15,6 @@ struct BalanceCard: View {
                     )
                 )
 
-            // MARK: - Content
             VStack(alignment: .leading) {
 
                 Text("Fő számla")
@@ -23,13 +23,15 @@ struct BalanceCard: View {
 
                 Spacer()
 
-                Text("1 252 578 Ft")
+                Text(balanceText)
                     .font(.system(size: 36, weight: .bold))
                     .foregroundColor(.white)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.75)
             }
             .padding(.vertical, 28)
-            .padding(.leading, 20)
-            .padding(.trailing, 110)
+            .padding(.horizontal, 20)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .frame(maxWidth: .infinity)
         .aspectRatio(1.8, contentMode: .fit)
@@ -43,5 +45,5 @@ struct BalanceCard: View {
 }
 
 #Preview {
-    BalanceCard()
+    BalanceCard(balanceText: "1 252 578 Ft")
 }

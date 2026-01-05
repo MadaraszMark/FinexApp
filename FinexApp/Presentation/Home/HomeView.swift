@@ -1,6 +1,13 @@
 import SwiftUI
 
 struct HomeView: View {
+    
+    @StateObject private var vm: HomeViewModel
+    
+    init() {
+        let accountAPI = AccountAPI()
+        _vm = StateObject(wrappedValue: HomeViewModel(accountAPI: accountAPI))
+    }
 
     var body: some View {
         ZStack {
@@ -11,11 +18,11 @@ struct HomeView: View {
                 VStack(spacing: 24) {
 
                     // MARK: - Header
-                    GreetingHeader()
+                    GreetingHeader(name: vm.fullName)
                         .padding(.top, 16)
 
                     // MARK: - Balance card
-                    BalanceCard()
+                    BalanceCard(balanceText: vm.balanceText)
 
                     // MARK: - Transactions
                     VStack(alignment: .leading, spacing: 16) {
@@ -77,10 +84,17 @@ struct HomeView: View {
                 }
                 .padding(.top, 8)
                 .padding(.bottom, 120)
+                
             }
+            .task {
+                await vm.loadMe()
+                await vm.loadBalance()
+            }
+
         }
     }
 }
+
 #Preview {
     HomeView()
 }

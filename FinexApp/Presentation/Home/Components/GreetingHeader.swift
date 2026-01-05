@@ -2,25 +2,24 @@ import SwiftUI
 
 struct GreetingHeader: View {
 
+    let name: String
     @EnvironmentObject var session: AuthSession
 
     var body: some View {
         HStack(alignment: .center) {
 
-            // MARK: - Left text
             VStack(alignment: .leading, spacing: 4) {
                 Text("Szia,")
                     .font(.system(size: 16))
                     .foregroundColor(.secondary)
 
-                Text("John Doe")
+                Text(name)
                     .font(.system(size: 28, weight: .bold))
                     .foregroundColor(.primary)
             }
 
             Spacer()
 
-            // MARK: - Right actions
             HStack(spacing: 16) {
 
                 Button(action: {}) {
@@ -54,5 +53,6 @@ struct GreetingHeader: View {
 }
 
 #Preview {
-    GreetingHeader()
+    GreetingHeader(name: "John Doe")
+        .environmentObject(AuthSession())
 }
